@@ -55,9 +55,26 @@ if [ "$1" == "publish" ]; then
   echo "[INFO] Pıblishing ..."
   echo ===========================================================================
   VERSION=`cat VERSION`
-  echo $VERSION
-  cd build
-  cpack --config CPackConfig.cmake 
-  cd ..
+  RELEASE=`git tag -l | tail -1`
+  if [ "$RELEASE" = "" ];then
+    gh release create "v$VERSION" --generate-notes
+  else 
+    gh release create "v$VERSION" --generate-notes --notes-start-tag `git tag -l | tail -1`
+  fi
+  git fetch --tags origin
+  # echo $VERSION
+  # cd build
+  # cpack --config CPackConfig.cmake 
+  # cd ..
+
+fi
+
+if [ "$1" == "unpublish" ]; then
+
+  echo ===========================================================================
+  echo "[INFO] Remove Publishing ..."
+  echo ===========================================================================
+  RELEASE=`git tag -l | tail -1`
+  gh release delete $RELEASE -y && git push --delete origin $RELEASE && git tag -d $RELEASE 
 
 fi
