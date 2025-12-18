@@ -49,6 +49,40 @@ if [ "$1" == "build" ]; then
 
 fi
 
+if [ "$1" == "install" ]; then
+
+  echo ===========================================================================
+  echo "[INFO] Installing ..."
+  echo ===========================================================================
+  rm -rf build
+  cmake -B build -DCMAKE_BUILD_TYPE=Release
+  cmake --build build
+
+  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    echo "Here"
+  elif [[ "$OSTYPE" == "darwin" ]]; then
+          # Mac OSX
+    echo "Here"
+  elif [[ "$OSTYPE" == "cygwin" ]]; then
+          # POSIX compatibility layer and Linux environment emulation for Windows
+    echo "Here"
+  elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    cmake.exe -B build -DCMAKE_INSTALL_PREFIX="$LOCALAPPDATA"/SignalRegistry  
+          # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+  elif [[ "$OSTYPE" == "win32" ]]; then
+          # I'm not sure this can happen.
+    echo "Here"
+  elif [[ "$OSTYPE" == "freebsd" ]]; then
+          # ...
+    echo "Here"
+  else
+          # Unknown.
+    echo "Here"
+  fi
+  cmake --build build --config Release --target INSTALL
+
+fi
+
 if [ "$1" == "publish" ]; then
 
   echo ===========================================================================
@@ -66,21 +100,21 @@ if [ "$1" == "publish" ]; then
   # cd build
   # cpack --config CPackConfig.cmake 
   # cd ..
-  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        # ...
-  elif [[ "$OSTYPE" == "darwin"* ]]; then
-          # Mac OSX
-  elif [[ "$OSTYPE" == "cygwin" ]]; then
-          # POSIX compatibility layer and Linux environment emulation for Windows
-  elif [[ "$OSTYPE" == "msys" ]] || [ "$OSTYPE" == "win32" ]]; then
-          # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-  elif [[ "$OSTYPE" == "win32" ]]; then
-          # I'm not sure this can happen.
-  elif [[ "$OSTYPE" == "freebsd"* ]]; then
-          # ...
-  else
-          # Unknown.
-  fi
+  # if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  #       # ...
+  # elif [[ "$OSTYPE" == "darwin"* ]]; then
+  #         # Mac OSX
+  # elif [[ "$OSTYPE" == "cygwin" ]]; then
+  #         # POSIX compatibility layer and Linux environment emulation for Windows
+  # elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+  #         # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+  # elif [[ "$OSTYPE" == "win32" ]]; then
+  #         # I'm not sure this can happen.
+  # elif [[ "$OSTYPE" == "freebsd"* ]]; then
+  #         # ...
+  # else
+  #         # Unknown.
+  # fi
 
 fi
 
