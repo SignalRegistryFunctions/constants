@@ -21,8 +21,9 @@ if [ "$1" == "dependencies" ]; then
   rm dependencies/argtable.tar.gz
   mv "dependencies/argtable-${ARGTABLE_VERSION}/" dependencies/argtable/
   cd dependencies/argtable
-  cmake -B build -DBUILD_SHARED_LIBS=OFF -DARGTABLE3_ENABLE_TESTS=OFF -DARGTABLE3_ENABLE_EXAMPLES=OFF
+  cmake -B build -DBUILD_SHARED_LIBS=OFF -DARGTABLE3_ENABLE_TESTS=OFF -DARGTABLE3_ENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX="$LOCALAPPDATA"
   cmake --build build --config Release
+  cmake --install build 
   cd ../..
 
   echo ---------------------------------------------------------------------------
